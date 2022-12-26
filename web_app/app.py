@@ -6,6 +6,7 @@ import cnn as CNN
 import numpy as np
 import torch
 import pandas as pd
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 disease_info = pd.read_csv('/workspaces/codespaces-jupyter/data/disease_info.csv' , encoding='cp1252')
@@ -19,12 +20,15 @@ model.load_state_dict(torch.load(path,map_location ='cpu'))
 model.eval()
 
 def prediction(image_path):
+    
     image = Image.open(image_path)
     image = image.resize((224, 224))
-    input_data = TF.to_tensor(image)
+    image = TF.to_tensor(image)
+    image = image.to(device)
+    input_data = image
     input_data = input_data.view((-1, 3, 224, 224))
     output = model(input_data)
-    output = output.detach().numpy()
+    output = output.cpu().data.numpy().argmax()
     index = np.argmax(output)
     return index
 
