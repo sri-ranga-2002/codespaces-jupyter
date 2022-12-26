@@ -56,7 +56,7 @@ def submit():
     if request.method == 'POST':
         image = request.files['image']
         filename = image.filename
-        file_path = os.path.join('static/uploads', filename)
+        file_path = os.path.join('/workspaces/codespaces-jupyter/web_app/static/uploads', filename)
         image.save(file_path)
         print(file_path)
         pred = prediction(file_path)
