@@ -9,13 +9,12 @@ import pandas as pd
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
-disease_info = pd.read_csv('/workspaces/codespaces-jupyter/data/disease_info.csv' , encoding='cp1252')
-supplement_info = pd.read_csv('/workspaces/codespaces-jupyter/data/disease_info.csv',encoding='cp1252')
+disease_info = pd.read_csv('/workspaces/codespaces-jupyter/data/disease_info.csv', encoding='cp1252')
+supplement_info = pd.read_csv('/workspaces/codespaces-jupyter/data/supplement_info.csv',encoding='cp1252')
 
 model = CNN.CNN(39)   
 model_save_name = 'plant_disease_model_1 (1).pt'
 path = F"/workspaces/codespaces-jupyter/data/model/{model_save_name}"
-
 model.load_state_dict(torch.load(path,map_location ='cpu'))
 model.eval()
 
@@ -41,7 +40,7 @@ def home_page():
 
 @app.route('/contact')
 def contact():
-    return render_template('contact-us.html')
+    return render_template('contact.html')
 
 @app.route('/index')
 def ai_engine_page():
